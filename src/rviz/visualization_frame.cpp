@@ -244,7 +244,7 @@ void VisualizationFrame::setSplashPath( const QString& splash_path )
   splash_path_ = splash_path;
 }
 
-void VisualizationFrame::initialize( const QString& display_config_file, int tf_buffer_size )
+void VisualizationFrame::initialize(const QString& display_config_file, int tf_buffer_size)
 {
   initConfigs();
 
