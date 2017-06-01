@@ -244,7 +244,7 @@ void VisualizationFrame::setSplashPath( const QString& splash_path )
   splash_path_ = splash_path;
 }
 
-void VisualizationFrame::initialize(const QString& display_config_file )
+void VisualizationFrame::initialize(const QString& display_config_file, int tf_buffer_size )
 {
   initConfigs();
 
@@ -326,7 +326,7 @@ void VisualizationFrame::initialize(const QString& display_config_file )
   // Periodically process events for the splash screen.
   if (app_) app_->processEvents();
 
-  manager_ = new VisualizationManager( render_panel_, this );
+  manager_ = new VisualizationManager( render_panel_, this, tf_buffer_size );
   manager_->setHelpPath( help_path_ );
 
   // Periodically process events for the splash screen.

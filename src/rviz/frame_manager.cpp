@@ -39,9 +39,9 @@
 namespace rviz
 {
 
-FrameManager::FrameManager(boost::shared_ptr<tf::TransformListener> tf)
+FrameManager::FrameManager(boost::shared_ptr<tf::TransformListener> tf, int tf_buffer_size)
 {
-  if (!tf) tf_.reset(new tf::TransformListener(ros::NodeHandle(), ros::Duration(10*60), true));
+  if (!tf) tf_.reset(new tf::TransformListener(ros::NodeHandle(), ros::Duration(tf_buffer_size), true));
   else tf_ = tf;
 
   setSyncMode( SyncOff );
