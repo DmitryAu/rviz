@@ -144,6 +144,7 @@ bool VisualizerApp::init( int argc, char** argv )
       ("disable-anti-aliasing", "Prevent rviz from trying to use anti-aliasing when rendering.")
       ("no-stereo", "Disable the use of stereo rendering.")
       ("verbose,v", "Enable debug visualizations")
+      ("tf-buffer,t", po::value<int>(), "Sets size of tf buffer.")
       ("log-level-debug", "Sets the ROS logger level to debug.");
     po::variables_map vm;
     std::string display_config, fixed_frame, splash_path, help_path;
@@ -151,6 +152,7 @@ bool VisualizerApp::init( int argc, char** argv )
     bool in_mc_wrapper = false;
     bool verbose = false;
     int force_gl_version = 0;
+    int tf_buffer_size = 60;
     bool disable_anti_aliasing = false;
     bool disable_stereo = false;
     try
@@ -222,6 +224,11 @@ bool VisualizerApp::init( int argc, char** argv )
         verbose = true;
       }
 
+      if (vm.count("tf-buffer"))
+      {
+        tf_buffer_size = vm["tf-buffer"].as<int>();
+      }
+
       if (vm.count("log-level-debug"))
       {
         if( ros::console::set_logger_level(ROSCONSOLE_DEFAULT_NAME, ros::console::levels::Debug) )
@@ -278,7 +285,7 @@ bool VisualizerApp::init( int argc, char** argv )
     {
       frame_->setSplashPath( QString::fromStdString( splash_path ));
     }
-    frame_->initialize( QString::fromStdString( display_config ));
+    frame_->initialize( QString::fromStdString( display_config ), tf_buffer_size );
     if( !fixed_frame.empty() )
     {
       frame_->getManager()->setFixedFrame( QString::fromStdString( fixed_frame ));
